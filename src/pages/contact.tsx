@@ -1,11 +1,8 @@
 import emailjs from "@emailjs/browser";
 import { useRef } from "react";
 
-import { title } from "@/components/primitives";
+import "react-phone-input-2/lib/style.css";
 import DefaultLayout from "@/layouts/default";
-import "@/styles/globals.css";
-
-<h1 className={title()}>Contact</h1>;
 
 export const ContactForm = () => {
   const form = useRef<HTMLFormElement>(null);
@@ -20,7 +17,8 @@ export const ContactForm = () => {
         })
         .then(
           () => {
-            console.error("SUCCESS!");
+            alert("Message sent successfully!");
+            form.current?.reset();
           },
           (error) => {
             console.error("FAILED...", error.text);
@@ -32,16 +30,53 @@ export const ContactForm = () => {
   };
 
   return (
-    <form ref={form} onSubmit={sendEmail}>
-      <label htmlFor="first_name">First name</label>
-      <input id="user_name" name="first_name" type="text" />
-      <label htmlFor="first_name">Last name</label>
-      <input id="user_name" name="first_name" type="text" />
-      <label htmlFor="user_email">Email</label>
-      <input name="user_email" type="email" />
-      <label htmlFor="user_message">Message</label>
-      <textarea name="message" />
-      <input type="submit" value="Send" />
+    <form
+      id="test"
+      encType="multipart/form-data"
+      ref={form}
+      onSubmit={sendEmail}
+    >
+      <h1>Contact Us</h1>
+      <label className="float required" htmlFor="first_name">
+        First name
+      </label>
+      <input
+        className="required"
+        id="user_name"
+        name="first_name"
+        type="text"
+        placeholder="John"
+        required
+      />
+      <label className="float required" htmlFor="last_name">
+        Last name
+      </label>
+      <input
+        className="required"
+        id="user_name"
+        name="last_name"
+        type="text"
+        placeholder="Doe"
+        required
+      />
+      <label className="float required" htmlFor="user_email">
+        Email
+      </label>
+      <input
+        name="user_email"
+        type="email"
+        placeholder="John@example.com"
+        required
+      />
+      <label className="float" htmlFor="user_phone">
+        Phone
+      </label>
+      <input name="user_phone" type="phone" placeholder="+44 7000000000" />
+      <label className="float" htmlFor="user_message">
+        Message
+      </label>
+      <textarea name="user_message" placeholder="" />
+      <input id="form-btn" type="submit" value="Send" />
     </form>
   );
 };
